@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+const BASE_URL = 'https://whatsapp-otp-validator-backend.onrender.com';
+
 function App() {
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
@@ -10,7 +12,7 @@ function App() {
   const sendOtp = async () => {
     setMessage('');
     try {
-      const res = await fetch('http://localhost:3000/send-otp', {
+      const res = await fetch(`${BASE_URL}/send-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone }),
@@ -29,7 +31,7 @@ function App() {
   const verifyOtp = async () => {
     setMessage('');
     try {
-      const res = await fetch('http://localhost:3000/verify-otp', {
+      const res = await fetch(`${BASE_URL}/verify-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone, otp }),
@@ -49,7 +51,7 @@ function App() {
   const getSecureData = async () => {
     setSecureData('');
     try {
-      const res = await fetch('http://localhost:3000/secure-data', {
+      const res = await fetch(`${BASE_URL}/secure-data`, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,

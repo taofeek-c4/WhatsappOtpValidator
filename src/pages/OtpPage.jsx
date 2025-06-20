@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const BASE_URL = 'https://whatsapp-otp-validator-backend.onrender.com';
+
 function OtpPage() {
   const [otp, setOtp] = useState('');
   const [message, setMessage] = useState('');
@@ -11,13 +13,13 @@ function OtpPage() {
     const phone = localStorage.getItem('userPhone');
 
     try {
-      const res = await fetch('http://localhost:3000/verify-otp', {
+      const res = await fetch(`${BASE_URL}/verify-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone, otp }),
       });
       const data = await res.json();
-      if (data.valid) {
+      if (data.valid && data.token) {
         localStorage.setItem('jwtToken', data.token);
         navigate('/success');
       } else {
